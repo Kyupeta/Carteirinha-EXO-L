@@ -43,11 +43,17 @@
       border-radius: 10px;
     }
 
-   <!-- Teste direto com <img> -->
-<img src="https://raw.githubusercontent.com/Kyupeta/Carteirinha-EXO-L/main/images/FRENTE-DA-CARTEIRINHA.PNG" alt="Frente da Carteirinha">
-<img src="https://raw.githubusercontent.com/Kyupeta/Carteirinha-EXO-L/main/images/VERSO-DA-CARTEIRINHA.PNG" alt="Verso da Carteirinha">
+    .card-front {
+      background-image: url('https://raw.githubusercontent.com/Kyupeta/Carteirinha-EXO-L/main/images/FRENTE-DA-CARTEIRINHA.PNG');
+      background-size: cover;
+      background-position: center;
+    }
 
-
+    .card-back {
+      background-image: url('https://raw.githubusercontent.com/Kyupeta/Carteirinha-EXO-L/main/images/VERSO-DA-CARTEIRINHA.PNG');
+      background-size: cover;
+      background-position: center;
+      transform: rotateY(180deg);
     }
 
     .input-group {
