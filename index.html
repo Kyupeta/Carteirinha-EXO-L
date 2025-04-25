@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Gerador de Carteirinha EXO-L</title>
+  <title>Carteirinha EXO-L</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -34,7 +34,7 @@
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
-      background-size: contain;
+      background-size: contain; /* Ajuste para não distorcer as imagens */
       background-position: center;
       border-radius: 10px;
     }
@@ -122,10 +122,9 @@
     </div>
   </div>
 
-  <button onclick="baixarPDF()">Baixar PDF</button>
+  <button onclick="baixarImagem()">Baixar Frente + Verso</button>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     function gerarCodigo() {
       const nome = document.getElementById("nome").value || "Nome Sobrenome";
@@ -138,14 +137,22 @@
       document.getElementById("codigo-texto").innerText = codigo;
     }
 
-    function baixarPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-
-      html2canvas(document.querySelector('.flip-card')).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        doc.addImage(imgData, 'PNG', 10, 10, 180, 160); // Ajuste as coordenadas e dimensões conforme necessário
-        doc.save('carteirinha_EXOL.pdf');
+    function baixarImagem() {
+      const cardElement = document.querySelector('.flip-card');
+      
+      // Usando html2canvas para capturar a imagem da carta
+      html2canvas(cardElement, {
+        logging: true,
+        backgroundColor: "#121212",
+        useCORS: true,
+        scale: 2 // Ajuste de escala para capturar imagens com mais detalhes
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'carteirinha_EXOL.png'; // Nome do arquivo
+        link.href = canvas.toDataURL("image/png"); // Cria o arquivo para download
+        link.click(); // Dispara o clique para o download
+      }).catch(error => {
+        console.error("Erro ao gerar a imagem:", error);
       });
     }
   </script>
