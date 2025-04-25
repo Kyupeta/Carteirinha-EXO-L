@@ -169,7 +169,7 @@
 
       html2canvas(document.querySelector('.flip-card')).then((canvas) => {
         const imgData = canvas.toDataURL('image/png');
-        doc.addImage(imgData, 'PNG', 10, 10, 180, 160); // Ajuste as coordenadas e dimensões conforme necessário
+        doc.addImage(imgData, 'PDF', 10, 10, 180, 160); // Ajuste as coordenadas e dimensões conforme necessário
         doc.save('carteirinha_EXOL.pdf');
       });
     }
