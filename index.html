@@ -29,10 +29,6 @@
       transform-style: preserve-3d;
     }
 
-    .flip-card:hover .flip-card-inner {
-      transform: rotateY(180deg);
-    }
-
     .card-face {
       position: absolute;
       width: 100%;
@@ -148,7 +144,8 @@
       html2canvas(cardElement, {
         logging: true,
         backgroundColor: "#121212",
-        useCORS: true
+        useCORS: true,
+        scale: 2 // Ajuste de escala para capturar imagens com mais detalhes
       }).then(canvas => {
         const link = document.createElement('a');
         link.download = 'carteirinha_EXOL.png'; // Nome do arquivo
