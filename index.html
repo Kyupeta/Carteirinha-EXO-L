@@ -22,8 +22,8 @@
 
     .flip-card-inner {
       position: relative;
-      width: 500px;
-      height: 300px;
+      width: 100%;
+      height: 100%;
       text-align: center;
       transition: transform 0.8s;
       transform-style: preserve-3d;
@@ -38,17 +38,17 @@
       width: 100%;
       height: 100%;
       backface-visibility: hidden;
-      background-size: cover;
+      background-size: contain; /* Ajuste para não distorcer as imagens */
       background-position: center;
       border-radius: 10px;
     }
 
     .card-front {
-      background-image: url('https://github.com/Kyupeta/Carteirinha-EXO-L/blob/00fbccbf114f5bde7529b8297a927482cd7a9c8d/images/FRENTE-DA-CARTEIRINHA.PNG');
+      background-image: url('https://raw.githubusercontent.com/Kyupeta/Carteirinha-EXO-L/main/images/FRENTE-DA-CARTEIRINHA.PNG');
     }
 
     .card-back {
-      background-image: url('https://github.com/Kyupeta/Carteirinha-EXO-L/blob/00fbccbf114f5bde7529b8297a927482cd7a9c8d/images/VERSO-DA-CARTEIRINHA-PNG.png');
+      background-image: url('https://raw.githubusercontent.com/Kyupeta/Carteirinha-EXO-L/main/images/VERSO-DA-CARTEIRINHA.PNG');
       transform: rotateY(180deg);
     }
 
@@ -127,12 +127,8 @@
   </div>
 
   <button onclick="baixarImagem()">Baixar Frente + Verso</button>
-  <button onclick="gerarPDF()">Baixar PDF</button>
 
-  <!-- Incluindo as bibliotecas html2canvas e jsPDF -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
   <script>
     function gerarCodigo() {
       const nome = document.getElementById("nome").value || "Nome Sobrenome";
@@ -148,6 +144,7 @@
     function baixarImagem() {
       const cardElement = document.querySelector('.flip-card');
       
+      // Usando html2canvas para capturar a imagem da carta
       html2canvas(cardElement, {
         logging: true,
         backgroundColor: "#121212",
@@ -159,17 +156,6 @@
         link.click(); // Dispara o clique para o download
       }).catch(error => {
         console.error("Erro ao gerar a imagem:", error);
-      });
-    }
-
-    function gerarPDF() {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-
-      html2canvas(document.querySelector('.flip-card')).then((canvas) => {
-        const imgData = canvas.toDataURL('image/png');
-        doc.addImage(imgData, 'PDF', 10, 10, 180, 160); // Ajuste as coordenadas e dimensões conforme necessário
-        doc.save('carteirinha_EXOL.pdf');
       });
     }
   </script>
