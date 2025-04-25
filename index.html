@@ -43,13 +43,12 @@
       border-radius: 10px;
     }
 
-    /* Links diretos para as imagens no GitHub */
     .card-front {
-      background-image: url('https://raw.githubusercontent.com/Kyupeta/Carteirinha-EXO-L/main/images/FRENTE-DA-CARTEIRINHA.PNG');
+      background-image: url('https://github.com/Kyupeta/Carteirinha-EXO-L/blob/1eac43443dc3745add01c65eed6e834ebd18228b/images/FRENTE-DA-CARTEIRINHA.PNG');
     }
 
     .card-back {
-      background-image: url('https://raw.githubusercontent.com/Kyupeta/Carteirinha-EXO-L/main/images/VERSO-DA-CARTEIRINHA.png');
+      background-image: url('https://github.com/Kyupeta/Carteirinha-EXO-L/blob/7b23289f6441c973bce6f2c34513dd0d612969d0/images/VERSO-DA-CARTEIRINHA.png');
       transform: rotateY(180deg);
     }
 
@@ -128,8 +127,12 @@
   </div>
 
   <button onclick="baixarImagem()">Baixar Frente + Verso</button>
+  <button onclick="gerarPDF()">Baixar PDF</button>
 
+  <!-- Incluindo as bibliotecas html2canvas e jsPDF -->
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <script>
     function gerarCodigo() {
       const nome = document.getElementById("nome").value || "Nome Sobrenome";
@@ -157,6 +160,17 @@
         link.click(); // Dispara o clique para o download
       }).catch(error => {
         console.error("Erro ao gerar a imagem:", error);
+      });
+    }
+
+    function gerarPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      html2canvas(document.querySelector('.flip-card')).then((canvas) => {
+        const imgData = canvas.toDataURL('image/png');
+        doc.addImage(imgData, 'PNG', 10, 10, 180, 160); // Ajuste as coordenadas e dimensões conforme necessário
+        doc.save('carteirinha_EXOL.pdf');
       });
     }
   </script>
